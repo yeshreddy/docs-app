@@ -5,10 +5,10 @@
   <modelVersion>4.0.0</modelVersion>
   
   <groupId>com.mdoc</groupId>
-  <artifactId>docs-app</artifactId>
+  <artifactId>documento</artifactId>
   <version>3.0</version>
   <packaging>war</packaging>
-  <name>docs-app</name>
+  <name>documento</name>
   <description>Documentation Application</description>
   
   <parent>
@@ -65,11 +65,34 @@
             <artifactId>spring-boot-starter-tomcat</artifactId>
             <scope>provided</scope>
         </dependency>
+         <dependency>
+ 			<groupId>org.springframework.boot</groupId>
+ 			<artifactId>spring-boot-starter-data-mongodb</artifactId>
+ 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+		
+		<dependency>
+  			<groupId>com.fasterxml.jackson.core</groupId>
+  			<artifactId>jackson-core</artifactId>
+  			<version>2.9.2</version>
+		</dependency>
+
+		<dependency>
+  			<groupId>com.fasterxml.jackson.core</groupId>
+  			<artifactId>jackson-annotations</artifactId>
+  			<version>2.9.2</version>
+		</dependency>
+
+		<dependency>
+  			<groupId>com.fasterxml.jackson.core</groupId>
+  			<artifactId>jackson-databind</artifactId>
+  			<version>2.9.2</version>
+		</dependency>
+		
 		
 	</dependencies>
 

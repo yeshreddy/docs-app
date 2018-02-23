@@ -13,28 +13,21 @@
         	</ol>
         
 	        <div class="grid-form1">
-	            <h3>Configure your documentation application here</h3>
+	            <h3>Manage your running application here</h3>
 	            <div class="tab-content tab-pane active" id="horizontal-form">
 	                
-	                <form class="form-horizontal" th:action="@{/admin/app-settings}" method="post">
+	                <form class="form-horizontal" th:action="@{/admin/app-settings-edit}" method="get">
 	                	<div class="form-group">
 							<label class="col-sm-4 control-label">App Name :</label> 
-							<div class="col-sm-6">
-								<input type="text" class="form-control1" id="doc-app-name" name="doc-app-name" th:value="${appName}"/>
-							</div>
+							<label class="col-sm-2 control-label" th:text="${appName}"></label>		
 							
 						</div>
 						<div class="form-group">
 							<label class="col-sm-4 control-label">CopyRight :</label>
-							<div class="col-sm-6">
-								<input type="text" class="form-control1" id="copy-right" name="copy-right" th:value="${copyRight}"/>
-							</div> 
-							 
-							
+							<label class="col-sm-2 control-label" th:text="${copyRight}" ></label>
 						</div>
 						<div class="row col-sm-offset-4">
-							<button type="button" onclick="validateAndSave()" class="btn btn-primary col-sm-2">launch</button>
-							<a th:href="@{/admin/home}"><button type="button" class="btn btn-default col-sm-2">Cancel</button></a>
+							<button type="submit" class="btn btn-primary col-sm-2">Manage</button>
 						</div>
 	                </form>              
 	                

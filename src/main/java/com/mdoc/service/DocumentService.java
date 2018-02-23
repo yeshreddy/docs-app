@@ -4,6 +4,7 @@ import java.io.DataInputStream;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -41,23 +42,41 @@ public class DocumentService {
 	documentRepository.save(toc);
     }
 
-    public String markdownToHtmlConverter(String fileName, String filePath, HttpSession session)
+    public String markdownToHtmlConverter(String fileName, String filePath)
 	    throws FileNotFoundException {
 
-	PegDownProcessor pegdown = new PegDownProcessor(Extensions.ALL, Long.MAX_VALUE);
-	DataInputStream dis = new DataInputStream(new FileInputStream(filePath + "/" + fileName + ".md"));
+		PegDownProcessor pegdown = new PegDownProcessor(Extensions.ALL, Long.MAX_VALUE);
+		DataInputStream dis = new DataInputStream(new FileInputStream(filePath + "/" + fileName + ".md"));
+	
+		byte[] markdownByte = null;
+		try {
+		    markdownByte = new byte[dis.available()];
+		    dis.readFully(markdownByte);
+		    dis.close();
+		} catch (IOException e) {
+		    e.printStackTrace();
+		}
+	
+		String markdownText = new String(markdownByte);
+		return pegdown.markdownToHtml(markdownText);
+    }
+    
+    public String markdownToHtmlConverter(InputStream stream) {
 
-	byte[] markdownByte = null;
-	try {
-	    markdownByte = new byte[dis.available()];
-	    dis.readFully(markdownByte);
-	    dis.close();
-	} catch (IOException e) {
-	    e.printStackTrace();
-	}
-
-	String markdownText = new String(markdownByte);
-	return pegdown.markdownToHtml(markdownText);
+    		PegDownProcessor pegdown = new PegDownProcessor(Extensions.ALL, Long.MAX_VALUE);
+    		DataInputStream dis = new DataInputStream(stream);
+    	
+    		byte[] markdownByte = null;
+    		try {
+    		    markdownByte = new byte[dis.available()];
+    		    dis.readFully(markdownByte);
+    		    dis.close();
+    		} catch (IOException e) {
+    		    e.printStackTrace();
+    		}
+    	
+    		String markdownText = new String(markdownByte);
+    		return pegdown.markdownToHtml(markdownText);
     }
 
     public TableOfContents getTableOfContentsOnTitle(String title) {

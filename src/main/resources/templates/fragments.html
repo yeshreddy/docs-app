@@ -1,7 +1,7 @@
 <!DOCTYPE HTML>
 <html>
 <head th:fragment="head-element">
-	<title th:text="${appName}">Docs App</title>
+	<title th:text="${appName}">Documento</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	
@@ -113,23 +113,25 @@
 			<a href="#" class="sidebar-icon"> <span class="fa fa-bars"></span> </a> 
 		</header>
 		<div style="border-top:1px ridge rgba(255, 255, 255, 0.15)"></div>
-        <div class="menu">
+		
+		 <div class="menu">
 			<ul id="menu" >
-				<li><a th:href="@{/}"><i class="fa fa-home"></i> <span>Docs Home</span><div class="clearfix"></div></a></li>
-				
-				<li><a th:href="@{/admin/newDoc}"><i class="fa fa-file-text"></i><span>Create New Doc</span><div class="clearfix"></div></a></li>
-				
+				<li><a th:href="@{/admin/home}"><i class="fa fa-home"></i> <span>Home</span><div class="clearfix"></div></a></li>
+										
+				<li sec:authorize="hasAuthority('ADMIN')"><a th:href="@{/admin/newDoc}"><i class="fa fa-file-text"></i><span>Create New Doc</span><div class="clearfix"></div></a></li>
+										
 				<li sec:authorize="hasAuthority('ADMIN')"><a th:href="@{/admin/manage-users}"><i class="fa fa-users"></i> <span>Manage Users</span><div class="clearfix"></div></a></li>
-				
+								
+								
 				<li sec:authorize="hasAuthority('ADMIN')"><a th:href="@{/registration}"><i class="fa fa-user-plus"></i> <span>Register User</span><div class="clearfix"></div></a></li>
-				
+										
 				<li sec:authorize="hasAuthority('ADMIN')"><a th:href="@{/admin/manage-docs}"><i class="fa fa-book"></i> <span>Manage Docs</span><div class="clearfix"></div></a></li>
-				
-				<li sec:authorize="hasAuthority('ADMIN')"><a th:href="@{/admin/app-settings}"><i class="fa fa-gear"></i> <span>App Settings</span><div class="clearfix"></div></a></li>
-				
+										
+				<li sec:authorize="hasAuthority('SUPER_ADMIN')"><a th:href="@{/admin/app-settings}"><i class="fa fa-gear"></i> <span>App Settings</span><div class="clearfix"></div></a></li>
+										
 				<li><a th:href="@{/admin/change-password}"><i class="fa fa-key"></i> <span>Change Password</span><div class="clearfix"></div></a></li>
-				
-		  	</ul>
+										 
+             </ul>
 		</div>
 		
 		<script>

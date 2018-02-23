@@ -45,6 +45,7 @@ public class DocumentationController {
     Properties properties = new Utilities().loadProperties();
 
     Authentication auth;
+    
     /**
      * This method is called after the application is started. It will give the
      * welcome page for the application.
@@ -53,6 +54,7 @@ public class DocumentationController {
      * @return ModelAndView
      * @throws IOException
      */
+    /*
     @RequestMapping(value = { "/docs", "/" }, method = RequestMethod.GET)
     public ModelAndView home(ModelAndView mav, HttpSession session) throws IOException {
 
@@ -85,7 +87,7 @@ public class DocumentationController {
 	return mav;
 
     }
-
+    */
     /**
      * With this method we view the docs. Using the title provided in the url,
      * this method gets the markdown file and converts it into html and
@@ -111,7 +113,7 @@ public class DocumentationController {
 	if (fileName == null)
 	    fileName = "home";
 
-	String htmlContent = documentService.markdownToHtmlConverter(fileName, filePath, session);
+	String htmlContent = documentService.markdownToHtmlConverter(fileName, filePath);
 	
 	mav.addObject("markdownHtml", htmlContent);
 	mav.addObject("tocList", tocList);

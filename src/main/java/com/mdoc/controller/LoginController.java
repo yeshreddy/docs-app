@@ -1,5 +1,7 @@
 package com.mdoc.controller;
 
+import java.io.FileNotFoundException;
+import java.io.InputStream;
 import java.util.Properties;
 
 import javax.servlet.http.HttpServletRequest;
@@ -35,30 +37,38 @@ public class LoginController {
 
     Properties properties;
 
+    
     /**
-     * This method opens up the login page if user is not authenticated
-     * otherwise redirects the user to admin home page.
-     * 
+     * This is super admin login view
+     * @param mav
      * @param request
      * @return
      */
-    @RequestMapping(value = "/login", method = RequestMethod.GET)
-    public ModelAndView login(ModelAndView mav, HttpServletRequest request) {
-
-	Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-	properties = new Utilities().loadProperties();
-	User user = userService.findUserByEmail(auth.getName());
-	request.getSession().setAttribute("user", user);
-	mav.addObject("user", user);
-	if (!(auth instanceof AnonymousAuthenticationToken)) {
-	    mav.addObject("appName", properties.getProperty("appName"));
-	    mav.addObject("copyRight", properties.getProperty("copyRight"));
-	    mav.setViewName("/admin/home");
-	    return mav;
-	}
-	mav.addObject("appName", properties.getProperty("appName"));
-	mav.setViewName("login");
-	return mav;
+    @RequestMapping(value = "/super-admin/login", method = RequestMethod.GET)
+    public ModelAndView superAdminLogin(ModelAndView mav, HttpServletRequest request) {
+    	mav.addObject("appName", "Documento");
+		mav.setViewName("login");
+		return mav;
+    	/*
+    	
+		*/
+		
+    }
+    @RequestMapping(value = "/submitlogin", method = RequestMethod.POST)
+    public ModelAndView submitLogin(ModelAndView mav, HttpServletRequest request) {
+    	Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		properties = new Utilities().loadProperties();
+		User user = userService.findUserByEmail(auth.getName());
+		request.getSession().setAttribute("user", user);
+		mav.addObject("user", user);
+		if (!(auth instanceof AnonymousAuthenticationToken)) {
+			mav.setView(new RedirectView("/documento/admin/home"));
+			return mav;
+		}
+	    String app = (String)mav.getModel().get("appName");
+		mav.addObject("appName", "Documento");
+		mav.setViewName("login");
+		return mav;
     }
 
     /**
@@ -108,24 +118,5 @@ public class LoginController {
 	return mav;
     }
 
-    /**
-     * Shows the admin page after user authentication is done.
-     * 
-     * @param request
-     * @return ModelAndView
-     */
-    @RequestMapping(value = "/admin/home", method = RequestMethod.GET)
-    public ModelAndView home(ModelAndView mav, HttpServletRequest request) {
-
-	Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-	properties = new Utilities().loadProperties();
-	User user = userService.findUserByEmail(auth.getName());
-	mav.addObject("user", user);
-	mav.addObject("appName", properties.getProperty("appName"));
-	mav.addObject("copyRight", properties.getProperty("copyRight"));
-	mav.setViewName("/admin/home");
-	return mav;
-
-    }
 
 }

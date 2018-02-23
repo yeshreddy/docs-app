@@ -45,20 +45,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Value("${spring.queries.roles-query}")
     private String rolesQuery;
 
-    /**
-     * This method will check for the users for authentication provided with
-     * username and password.
-     * 
-     * @param AuthenticationManagerBuilder
-     * 
-     */
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception{
-	auth.jdbcAuthentication()
-			.usersByUsernameQuery(usersQuery)
-			.authoritiesByUsernameQuery(rolesQuery)
-			.dataSource(dataSource)
-			.passwordEncoder(bCryptPasswordEncoder);
-    }
+   
 
     /**
      * This method catches all urls in the application and checks if user is
@@ -68,13 +55,12 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception{
 	http.authorizeRequests()
 		.antMatchers("/").permitAll()
-		.antMatchers("/login").permitAll()
+		.antMatchers("/super-admin/login").permitAll()
 		.antMatchers("/registration").permitAll()
 		.antMatchers("/docs/**").permitAll()
-		.antMatchers("/admin/**").hasAnyAuthority("ADMIN", "EDITOR").anyRequest()
+		.antMatchers("/admin/**").hasAnyAuthority("SUPER_ADMIN", "EDITOR").anyRequest()
 		.authenticated().and().csrf().disable().formLogin()
-		.loginPage("/login").failureUrl("/login?error=true")
-		.defaultSuccessUrl("/admin/home")
+		.loginPage("/submitlogin").failureUrl("/login?error=true")
 		.usernameParameter("email")
 		.passwordParameter("password")
 		.and().logout()

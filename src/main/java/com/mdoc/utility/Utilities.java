@@ -34,24 +34,30 @@ public class Utilities {
     }
 
     public void saveProperties(HashMap<String, String> propHash) {
-	Properties prop = new Properties();
-	File file = new File(filePath + "/appinfo.properties");
-	FileInputStream fis = null;
-	FileOutputStream fos = null;
-	try {
-	    file.createNewFile();
-	    fis = new FileInputStream(file);
-	    fos = new FileOutputStream(file);
-	    prop.load(fis);
-	    Iterator<String> keySet = propHash.keySet().iterator();
-	    String key = null;
-	    while (keySet.hasNext()) {
-		key = keySet.next();
-		prop.setProperty(key, propHash.get(key));
-	    }
-	    prop.store(fos, null);
-	} catch (Exception e) {
-	    e.printStackTrace();
-	}
+		Properties prop = new Properties();
+		File file = new File(filePath + "/appinfo.properties");
+		FileInputStream fis = null;
+		FileOutputStream fos = null;
+		try {
+		    file.createNewFile();
+		    fis = new FileInputStream(file);
+		    fos = new FileOutputStream(file);
+		    prop.load(fis);
+		    Iterator<String> keySet = propHash.keySet().iterator();
+		    String key = null;
+		    while (keySet.hasNext()) {
+			key = keySet.next();
+			prop.setProperty(key, propHash.get(key));
+		    }
+		    prop.store(fos, null);
+		} catch (Exception e) {
+		    e.printStackTrace();
+		}
+    }
+    
+    public boolean getAppStatus(){
+    	Properties properties = new Utilities().loadProperties();
+    	boolean app_launch_status = properties.getProperty("appLaunch").equals("true");
+    	return app_launch_status;
     }
 }
